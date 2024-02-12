@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حساب النتائج</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  h3 {
+    color: #333;
+  }
+  input, select, button {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+<h3>عدد الأهداف:</h3>
+<input type="number" id="inputNumber1">
+<h3>كم رجل مباراة:</h3>
+<input type="number" id="inputNumber2">
+<h3>العمر:</h3>
+<input type="number" id="inputNumber3">
+<h3>تقييم هذا الموسم حتى الآن:</h3>
+<input type="number" id="inputNumber4">
+<h3>كم هدف احرزته مع المنتخب:</h3>
+<input type="number" id="inputNumber5">
+<h3>هل استدعيت للمنتخب؟</h3>
+<select id="bonusSelect">
+  <option value="yes">Yes</option>
+  <option value="no">No</option>
+</select>
+<button onclick="calculate()">احسب</button>
+<p id="result"></p>
+
+<script>
+var totalResult = 0;
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + '€';
+}
+
+function calculate() {
+  var number1 = parseFloat(document.getElementById("inputNumber1").value);
+  var number2 = parseFloat(document.getElementById("inputNumber2").value);
+  var number3 = parseFloat(document.getElementById("inputNumber3").value);
+  var number4 = parseFloat(document.getElementById("inputNumber4").value);
+  var number5 = parseFloat(document.getElementById("inputNumber5").value);
+  var bonus = document.getElementById("bonusSelect").value;
+  var result1 = number1 * 10000;
+  var result2 = number2 * 20000;
+  totalResult = result1 + result2;
+  
+  if (number3 >= 17 && number3 < 20) {
+    totalResult *= 10;
+  } else if (number3 >= 20 && number3 < 27) {
+    totalResult *= 7;
+  } else if (number3 >= 27 && number3 < 30) {
+    totalResult *= 3;
+  } else if (number3 >= 30 && number3 < 35) {
+    totalResult *= 2;
+  } else if (number3 >= 35) {
+    totalResult *= -1;
+  }
+
+  if (number4 >= 5 && number4 < 6) {
+    totalResult += 2000000;
+  } else if (number4 >= 6 && number4 < 7) {
+    totalResult += 3000000;
+  } else if (number4 >= 7 && number4 < 8) {
+    totalResult += 7000000;
+  } else if (number4 >= 8 && number4 < 9) {
+    totalResult += 15000000;
+  } else if (number4 >= 9 && number4 <= 10) {
+    totalResult += 40000000;
+  }
+
+  totalResult += number5 * 2000000;
+
+  if (bonus === "yes") {
+    totalResult += 20000000;
+  }
+  
+  document.getElementById("result").innerText = "القيمة السوقية هي: " + numberWithCommas(totalResult);
+}
+</script>
+</body>
+</html>
